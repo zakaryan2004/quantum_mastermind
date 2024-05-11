@@ -1,0 +1,50 @@
+% this file is included in manuscript.tex
+
+\usepackage[utf8]{inputenc} % avoid problem with non-latin input characters
+\usepackage[english]{babel}
+\usepackage{graphicx} 
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref} 
+
+\usepackage{amsmath,amssymb,amsfonts} % useful macros for equations
+
+% optional tweaks/features related to fonts
+\usepackage{palatino} % change font
+\usepackage{microtype} % fine details of typography
+\usepackage{upgreek} % \textmu 
+\usepackage[sf]{titlesec} % rm for default serif titles
+\usepackage{csquotes} % smart quotes
+\MakeOuterQuote{"}  
+
+\usepackage{booktabs,multirow} % nicer looking tables
+\usepackage{caption} % give a bit more space below caption
+\captionsetup{skip=10pt}
+
+\usepackage{authblk} % author list formatting
+
+\usepackage[numbers,sort&compress]{natbib}  % citation formatting improvements
+\bibliographystyle{unsrtnat} % refs in order of appearance
+
+% turn off indentation of new paragraph, and replace it with a line skip
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1ex}
+% avoid lonely lines etc.
+\widowpenalty10000
+\clubpenalty10000
+% better defaults for spacing of figures etc.
+% https://aty.sdsu.edu/bibliog/latex/floats.html
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+\renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}     % 2 may work better
+\setcounter{dbltopnumber}{2}    % for 2-column pages
+\renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+\renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+\renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+\renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+% \usepackage{layouts} % use this to find out the column and page width of the document
+% \printinunitsof{in}\prntlen{\columnwidth}
+% \printinunitsof{in}\prntlen{\textwidth}
+% 3.06526in 6.26894in

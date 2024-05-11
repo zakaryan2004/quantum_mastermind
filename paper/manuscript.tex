@@ -1,0 +1,53 @@
+\documentclass[10pt,onecolumn]{article}
+\input{preamble.tex}
+
+%%%%%%%% useful shortcuts %%%%%%%%
+\newcommand{\Grad}{\nabla}
+\newcommand{\Div}{\nabla\cdot}
+\newcommand{\Curl}{\nabla\times}
+
+\newcommand{\vecE}{\mathbf{E}}
+\newcommand{\vecB}{\mathbf{B}}
+\newcommand{\vecD}{\mathbf{D}}
+\newcommand{\vecH}{\mathbf{H}}
+\newcommand{\vecJ}{\mathbf{J}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+\title{Quantum Mastermind}
+%
+\author[1]{Gegham Zakaryan}
+\affil{American University of Armenia}
+\affil{College of Science and Engineering}
+\affil{CS339 - Quantum Computing}
+%
+\date{\today}
+%
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This project is a quantum version of the classic game Master Mind played by two players. Given \textit{n} different colors, the first player – the keeper, secretly forms a sequence of \textit{n} colored pins, where several pins may share the same color or all of them may be of different colors. The task of the second player – the guesser, to disclose the hidden sequence with minimal guesses.
+
+This project works with the following version (\textbf{version 2}): each guess is graded by the keeper with a single digit – the number of correct
+pins in their correct positions. The game stops when the grade of the most recent guess is \textit{n}.
+\end{abstract}
+
+\tableofcontents
+
+\input{sections/1-introduction}
+\input{sections/2-methods}
+\input{sections/3-results}
+\input{sections/4-conclusions}
+\input{sections/5-acknowledgements}
+
+\addcontentsline{toc}{section}{References}
+\nocite*{} % use this to cite everything in the bib file
+\bibliography{refs}
+
+\appendix
+
+\input{sections/z-appendix-appendix}
+
+\end{document}
