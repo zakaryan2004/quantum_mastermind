@@ -1,0 +1,97 @@
+%
+\section{Results}
+%
+
+\subsection*{Design quantum gates that implement the operations of the sequential classical algorithm. Apply the designed gates to superposition states aiming at parallelization of the move
+search.}
+
+Let \( n \) be the length of the picked guess \( g = g_0 g_1 \ldots g_{n-1} \). Let \( s \) be the score we got from the keeper.
+
+We will use XOR operations to compare each qubit of the superposition state with the guess bit sequence \( g = g_0 g_1 \ldots g_{n-1} \) and calculate the best candidates for the next guess. The best candidates will be sequences that have a Hamming distance $s$ from a possible state of the superposition. For example, if we are playing the game with $n$=4 bits, the guess is $g$=1011, and the score is $s$=1, then, from the 16 possible states of the superposition of 4 qubits, we desire to get one of the following qubits when we measure it: 0011, 1111, 1001, 1010.
+
+\begin{itemize}
+    \item For each qubit \( q_i \) and the corresponding bit \( g_i \) in the guess sequence:
+        \begin{itemize}
+            \item If \( g_i = 1 \), apply an \( X \) gate to flip \( q_i \).
+            \item Apply a CNOT gate from \( q_i \) to an auxiliary qubit initialized to \( \ket{0} \).
+            \item If \( g_i = 1 \), apply another \( X \) gate to revert \( q_i \).
+        \end{itemize}
+\end{itemize}
+
+\[
+\Qcircuit @C=1em @R=1em {
+\lstick{\ket{q_0}} & \gate{X^{t_0}} & \ctrl{4} & \gate{X^{t_0}} & \qw \\
+\lstick{\ket{q_1}} & \gate{X^{t_1}} & \ctrl{3} & \gate{X^{t_1}} & \qw \\
+\lstick{\ket{q_2}} & \gate{X^{t_2}} & \ctrl{2} & \gate{X^{t_2}} & \qw \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+\lstick{\ket{q_{n-1}}} & \gate{X^{t_{n-1}}} & \ctrl{1} & \gate{X^{t_{n-1}}} & \qw \\
+\lstick{\ket{a_0}} & \targ & \qw & \qw & \qw \\
+\lstick{\ket{a_1}} & \qw & \targ & \qw & \qw \\
+\lstick{\ket{a_2}} & \qw & \qw & \targ & \qw \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+\lstick{\ket{a_{n-1}}} & \qw & \qw & \qw & \targ \\
+}
+\]
+
+\subsection*{4. Sum the Hamming Distance}
+
+Use quantum addition to sum the results in the auxiliary qubits, which represent the XOR results, to compute the Hamming distance. This requires several auxiliary qubits and a quantum adder circuit.
+
+\subsection*{5. Mark States with Desired Hamming Distance}
+
+Use quantum comparison to mark states where the auxiliary qubits encode the desired Hamming distance \( s \). This can be done using a comparator circuit that flags states with Hamming distance \( s \) and then applies a phase flip.
+
+\[
+\Qcircuit @C=1em @R=1em {
+\lstick{\ket{q_0}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{4} & \qw & \qw & \qw \\
+\lstick{\ket{q_1}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{3} & \qw & \qw & \qw \\
+\lstick{\ket{q_2}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{2} & \qw & \qw & \qw \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+\lstick{\ket{q_{n-1}}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \ctrl{1} & \qw & \qw & \qw \\
+\lstick{\ket{a_0}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \targ & \qw & \qw & \qw \\
+\lstick{\ket{a_1}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \targ & \qw & \qw & \qw \\
+\lstick{\ket{a_2}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \targ & \qw & \qw & \qw \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+\lstick{\ket{a_{n-1}}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \targ & \qw & \qw & \qw \\
+\lstick{\ket{s}} & \qw & \qw & \qw & \qw & \qw & \qw & \qw & \gate{Z} & \qw & \qw & \qw \\
+}
+\]
+
+\subsection*{6. Amplitude Amplification}
+
+Apply the Grover diffusion operator to amplify the amplitude of the marked states.
+
+\begin{itemize}
+    \item Apply Hadamard gates to all input qubits.
+    \item Apply \( X \) gates to all input qubits.
+    \item Apply a multi-controlled Z gate.
+    \item Apply \( X \) gates to all input qubits again.
+    \item Apply Hadamard gates to all input qubits again.
+\end{itemize}
+
+\[
+\Qcircuit @C=1em @R=1em {
+\lstick{\ket{q_0}} & \gate{H} & \gate{X} & \ctrl{4} & \gate{X} & \gate{H} & \qw \\
+\lstick{\ket{q_1}} & \gate{H} & \gate{X} & \ctrl{3} & \gate{X} & \gate{H} & \qw \\
+\lstick{\ket{q_2}} & \gate{H} & \gate{X} & \ctrl{2} & \gate{X} & \gate{H} & \qw \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+\lstick{\ket{q_{n-1}}} & \gate{H} & \gate{X} & \ctrl{1} & \gate{X} & \gate{H} & \qw \\
+\lstick{\ket{a_0}} & \qw & \qw & \targ & \qw & \qw & \qw \\
+}
+\]
+
+Repeat the marking and diffusion steps as needed.
+
+\subsection*{7. Measurement}
+
+Measure the first \( n \) qubits. The resulting bit string should have a high probability of having a Hamming distance of the desired value \( s \) from the given sequence \( t = t_0 t_1 \ldots t_{n-1} \).
+
+\[
+\Qcircuit @C=1em @R=1em {
+\lstick{\ket{q_0}} & \meter & \cw \\
+\lstick{\ket{q_1}} & \meter & \cw \\
+\lstick{\ket{q_2}} & \meter & \cw \\
+\vdots & \vdots & \vdots \\
+\lstick{\ket{q_{n-1}}} & \meter & \cw \\
+}
+\]

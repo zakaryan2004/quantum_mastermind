@@ -1,0 +1,34 @@
+%
+\section{Time Complexity}
+%
+
+\subsection*{Estimate the complexity of the move search in different stages of the game.}
+
+Let's consider how many guesses we can possibly have initially, given no information at all. Denote that number by $N_0 = 2^n$, where $n$ is the length of the sequence in the game.
+
+We will pick a guess $g = g_1 g_2 ... g_n$ randomly, give it to the keeper, and get the number $k$ back. Then, let's denote $N_1$ as the number of guesses that make sense, given the score $k$ for the sequence $g$. We can count this number by calculating the number of ways we can count the number of different sequences that can be created by flipping $k$ bits in the sequence $g$, and denote this number by $N_1$.
+
+\[
+N_1 = \binom{n}{k} = \frac{n!}{k!\,(n-k)!}
+\]
+
+Let's use Stirling's approximation to approximate this number:
+
+\[
+N_1 \approx \frac{\sqrt{2\pi n} {(\frac{n}{e})}^n}{\sqrt{2\pi k} {(\frac{k}{e})}^k \sqrt{2\pi (n-k)} {(\frac{n-k}{e})}^{n-k}}
+\]
+
+
+Since $\binom{n}{k}$ attains its maximum value at $k = \frac{n}{2}$, then the number $N_1$ will also attain its maximum value there.
+
+\[
+N_1 \approx \frac{\sqrt{2\pi n} {(\frac{n}{e})}^n}{\sqrt{2\pi n/2} {(\frac{n/2}{e})}^k \sqrt{2\pi (n-n/2)} {(\frac{n-n/2}{e})}^{n-n/2}} = \frac{\sqrt{2\pi n} {(\frac{n}{e})}^n}{2\pi \frac{n}{2} {(\frac{n}{2e})}^n} = \sqrt{\frac{2}{\pi}} \frac{2^n}{\sqrt{n}}
+\]
+
+Following this, we can calculate the ratio of the past and current number of possibilities.
+
+\[
+\frac{N_0}{N_1} = \sqrt{\frac{\pi}{2}} \sqrt{n} \approx \sqrt{n}
+\]
+
+From this, it follows that we can reduce the input of the algorithm after each step by a factor of $\sqrt{n}$, which will greatly affect the time complexity of the algorithm.

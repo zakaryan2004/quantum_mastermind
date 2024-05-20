@@ -1,2 +1,4 @@
-numpypy
+numpy
 qiskit
+qiskit-aer
+qiskit-algorithms

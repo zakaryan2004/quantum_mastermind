@@ -1,3 +1,33 @@
 %
-\section{Methods}
+\section{Quantum System}
 %
+
+\subsection*{Suggest a system of qubits that describes the game, and define the game states and state vectors.}
+
+Let $n$ be the length of the sequence in the game. We will keep $n$ qubits describing our guess, $n$ auxiliary qubits storing the XOR results and the Hamming distances, and some auxiliary qubits for interim calculations.
+
+\subsection*{Initialization of the state and state vectors}
+
+Start with \( n \) qubits in the state \( \ket{0} \) and additional auxiliary qubits as required.
+
+\[
+\ket{0}^{\otimes n} \otimes \ket{0}^{\otimes n}
+\]
+
+\subsection*{Create Superposition}
+
+Apply Hadamard gates to the first \( n \) qubits to create an equal superposition of all possible \( n \)-bit states:
+
+\[
+H^{\otimes n} \ket{0}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n-1} \ket{x}
+\]
+
+\[
+\Qcircuit @C=1em @R=1em {
+\lstick{\ket{0}} & \gate{H} & \qw \\
+\lstick{\ket{0}} & \gate{H} & \qw \\
+\lstick{\ket{0}} & \gate{H} & \qw \\
+\vdots & \vdots & \vdots \\
+\lstick{\ket{0}} & \gate{H} & \qw \\
+}
+\]

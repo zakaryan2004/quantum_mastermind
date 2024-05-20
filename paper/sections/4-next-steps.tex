@@ -1,0 +1,13 @@
+%
+\section{Next Steps}
+%
+
+Since the algorithm gives the next guess only, given a previous guess with its score, it's not clearly apparent how to solve the problem completely. To solve the problem, here are the steps we take with this algorithm:
+
+\begin{itemize}
+    \item Initially, we pick a completely random guess $g0$ and get the score $s0$ from the keeper.
+    \item Then, we use our algorithm to get the next guess $g1$.
+    \item We give this guess to the keeper and get $s1$.
+    \item Instead of passing $g1$ and $s1$ to the algorithm immediately, we do something different. First, we pass $g0$ and $s0$, but we don't measure the qubits in the last step. This allows us to keep only the states that have the Hamming distance $s0$. After that, we run the algorithm on those qubits with $g1$ and $s1$. This allows us to have much less (a factor of $\sqrt{n}$ less) states to work with. After this is done, we finally measure the qubits.
+    \item For each next step, we do the same: we run the algorithm for $g0,1,...n$ and $s0,1,...n$ instead of only $gn$ and $sn$.
+\end{itemize}
